@@ -1,49 +1,52 @@
-class Materiel(object):
+class Materiel(dict):
 	"""docstring for Materiel"""
-	def __init__(self, id, active,use, brand="",used=[]):
+	def __init__(self, id, active,use):
 		super(Materiel, self).__init__()
-		if type(id) == "String":
-			self.__id__ = id
-		self.__brand__ = brand
-		if type(active) == "Boolean":
-			self.__active__ = active
-		if type(use) == "Boolean":
-			self.__use__ = use
-		if type(used) == "List":
-			self.__used__ = used
-
-	def getId(self):
-		return self.__id__
-	def getBrand(self):
-		return self.__brand__
-	def getActive(self):
-		return self.__active__
-	def getUse(self):
-		return self.__use__
-	def getUsed(self):
-		return self.__used__
+		self['Id'] = id
+		self['Active'] = active
+		self['Use'] = use
 
 class MotherBoard(Materiel):
-	def __init__(self):
-		Materiel.__init__(self)
+	def __init__(self, id, active,use,ramSlot,cpu=None):
+		Materiel.__init__(self, id, active,use)
+		self['RamSlot'] = ramSlot
+		self['Cpu']= cpu
+
 
 class Chassis(Materiel):
-	def __init__(self,nodeCount=4,PowerSupply=0):
-		Materiel.__init__(self)
-		self.__nodeCount__ = nodeCount
-		nodes =[]
-		for slot in range(0,nodeCount-1):
-			nodes.append("")
-		self.__nodes__ = nodes
-		self.__powerSupply
+	def __init__(self, id, active,use,nodeCount=4,powerSupply=0):
+		Materiel.__init__(self, id, active,use)
+		self['NodeCount'] = nodeCount
+		self['PowerSupply'] = powerSupply
 
 class Switch(Materiel):
-	def __init__(self):
-		Materiel.__init__(self)
+	def __init__(self, id, active,use):
+		Materiel.__init__(self, id, active,use)
 
-class Leasing(object):
+class Action(dict):
+	"""docstring for Action"""
+	def __init__(self,_id,_source,_target ):
+		super(Action, self).__init__()
+		self['_id'] = _id
+		self['Source'] = _source
+		self['Target'] = _target
+		
+
+class Setup(Action):
+	"""docstring for Setup"""
+	def __init__(self, arg):
+		self.arg = arg
+		
+
+class Leasing(Action):
 	"""docstring for Leasing"""
 	def __init__(self, arg):
 		super(Leasing, self).__init__()
+		self.arg = arg
+
+class ArangoSession(object):
+	"""docstring for ArangoSession"""
+	def __init__(self, arg):
+		super(ArangoSession, self).__init__()
 		self.arg = arg
 		
